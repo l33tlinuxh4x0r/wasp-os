@@ -60,14 +60,14 @@ wasp/boards/$(BOARD_SAFE)/watch.py : wasp/boards/$(BOARD_SAFE)/watch.py.in
 
 micropython: build-$(BOARD_SAFE) wasp/boards/$(BOARD_SAFE)/watch.py
 	$(MAKE) -C micropython/mpy-cross \
-	CWARN="-Wall -Wno-error"
+	CWARN="-Wall -Wno-error" \
 	$(RM) micropython/ports/nrf/build-$(BOARD)-s132/frozen_content.c
 	$(MAKE) -C micropython/ports/nrf \
 		BOARD=$(BOARD) SD=s132 \
 		MICROPY_VFS_LFS2=1 \
 		FROZEN_MANIFEST=$(PWD)/wasp/boards/$(BOARD)/manifest.py \
 		USER_C_MODULES=$(PWD)/wasp/modules \
-		COPT="-Wno-error"
+		COPT="-Wno-error" \
 	$(PYTHON) -m nordicsemi dfu genpkg \
 		--dev-type 0x0052 \
 		--application micropython/ports/nrf/build-$(BOARD)-s132/firmware.hex \
